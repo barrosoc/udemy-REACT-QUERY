@@ -13,7 +13,7 @@ async function fetchPosts(pageNum) {
 }
 
 export function Posts() {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedPost, setSelectedPost] = useState(null);
 
   const queryClient = useQueryClient();
@@ -59,7 +59,7 @@ export function Posts() {
       </ul>
       <div className="pages">
         <button
-          disabled={currentPage <= 0}
+          disabled={currentPage <= 1}
           onClick={() => {
             setCurrentPage((prevState) => prevState - 1)
           }}>
