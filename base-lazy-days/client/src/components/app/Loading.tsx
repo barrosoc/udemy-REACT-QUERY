@@ -1,9 +1,9 @@
 import { Spinner, Text } from '@chakra-ui/react';
 import { ReactElement } from 'react';
-import {useIsFetching} from "react-query";
+import { useIsFetching } from 'react-query';
 
 export function Loading(): ReactElement {
-  const isFetching = useIsFetching()
+  const isFetching = useIsFetching();
 
   const display = isFetching ? 'inherit' : 'none';
 
