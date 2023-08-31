@@ -1,12 +1,12 @@
 // @ts-nocheck
 import dayjs from 'dayjs';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { useQuery } from 'react-query';
 
 import { axiosInstance } from '../../../axiosInstance';
 import { queryKeys } from '../../../react-query/constants';
 import { useUser } from '../../user/hooks/useUser';
 import { AppointmentDateMap } from '../types';
-import { getAvailableAppointments } from '../utils';
 import { getMonthYearDetails, getNewMonthYear, MonthYear } from './monthYear';
 
 // for useQuery call
@@ -49,6 +49,7 @@ export function useAppointments(): UseAppointments {
   function updateMonthYear(monthIncrement: number): void {
     setMonthYear((prevData) => getNewMonthYear(prevData, monthIncrement));
   }
+
   /** ****************** END 1: monthYear state ************************* */
   /** ****************** START 2: filter appointments  ****************** */
   // State and functions for filtering appointments to show all or only available
@@ -70,7 +71,10 @@ export function useAppointments(): UseAppointments {
   //
   //    2. The getAppointments query function needs monthYear.year and
   //       monthYear.month
-  const appointments = {};
+  const { data: appointments = {} } = useQuery(
+    [queryKeys.appointments, monthYear.month, monthYear.year],
+    () => getAppointments(monthYear.year, monthYear.month),
+  );
 
   /** ****************** END 3: useQuery  ******************************* */
 
